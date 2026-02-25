@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ${APP_NAME}
+
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: ${MONGO_DB}
+      auto-index-creation: ${MONGO_AUTO_INDEX}
