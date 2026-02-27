@@ -1,4 +1,4 @@
-package com.nivora.ask.sevices;
+package com.nivora.ask.service;
 
 import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;

@@ -2,7 +2,7 @@ package com.nivora.ask.controllers;
 
 import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;
-import com.nivora.ask.sevices.IQuestionService;
+import com.nivora.ask.service.IQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
