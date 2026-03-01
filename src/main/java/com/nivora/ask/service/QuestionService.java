@@ -6,6 +6,7 @@ import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;
 import com.nivora.ask.model.Question;
 import com.nivora.ask.repo.QuestionRepo;
+import com.nivora.ask.utils.CursorUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,8 +43,27 @@ public class QuestionService implements  IQuestionService {
     }
 
     @Override
-    public Flux<QuestionResponseDto> getAllQuestions() {
-        return null;
+    public Flux<QuestionResponseDto> getAllQuestions(String cursor , int size) {
+        System.out.println("I am going to hit questionRepo for all question with cursor :" + cursor + "and size :" + size);
+        Pageable pageable = PageRequest.of(0 , size);
+
+        if(!CursorUtils.isValidCursor(cursor)){
+            System.out.println("Not Valid cursor");
+            return questionRepo.findTop10ByOrderByCreatedAtAsc()
+                    .take(size)
+                    .map(QuestionAdapter::toQuestionDTO)
+                    .doOnError(error -> System.out.println("Error fetching Questions:"+error))
+                    .doOnComplete(() -> System.out.println("Question fetched Successfully"));
+
+        }else {
+            System.out.println("Valid cursor");
+            LocalDateTime cursorTimeStamp = CursorUtils.parseCursor(cursor);
+             return questionRepo.findByCreatedAtGreaterThanOrderByCreatedAtAsc(cursorTimeStamp , pageable)
+                     .take(size)
+                     .map(QuestionAdapter::toQuestionDTO)
+                    .doOnError(error -> System.out.println("Error fetching questions: " + error))
+                    .doOnComplete(() -> System.out.println("Question Fetched successfully"));
+        }
     }
 
     @Override

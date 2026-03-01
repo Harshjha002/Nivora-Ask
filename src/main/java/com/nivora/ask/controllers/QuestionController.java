@@ -25,9 +25,14 @@ public class QuestionController {
 
     // Get all questions
     @GetMapping
-    public Flux<QuestionResponseDto> getAllQuestions() {
+    public Flux<QuestionResponseDto> getAllQuestions(
+            @RequestParam(required = false) String cursor,
+            @RequestParam(defaultValue = "10") int size
 
-        return questionService.getAllQuestions();
+    ) {
+        System.out.println("All Question api hit");
+
+        return questionService.getAllQuestions(cursor,size);
     }
 
     // Get question by ID

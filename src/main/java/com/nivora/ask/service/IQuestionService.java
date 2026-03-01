@@ -11,7 +11,7 @@ public interface IQuestionService {
     Mono<QuestionResponseDto> createQuestion(QuestionRequestDto request);
 
     // Get all questions
-    Flux<QuestionResponseDto> getAllQuestions();
+    Flux<QuestionResponseDto> getAllQuestions(String cursor , int size);
 
     // Get question by ID
     Mono<QuestionResponseDto> getQuestionById(String id);
