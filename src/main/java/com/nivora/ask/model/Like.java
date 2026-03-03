@@ -22,12 +22,11 @@ public class Like {
 
     private String targetId;
 
-    private LikeTargetTypeEnum targetType; //Question , Answer
+    private LikeTargetTypeEnum targetType;
 
     private Boolean  isLike;
 
     @CreatedDate
     private LocalDateTime createdAt;
-
 
 }
