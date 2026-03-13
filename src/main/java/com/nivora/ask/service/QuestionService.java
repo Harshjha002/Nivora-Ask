@@ -67,10 +67,13 @@ public class QuestionService implements  IQuestionService {
     }
 
 
-    //Vie Count
+    //View Count
     @Override
     public Mono<QuestionResponseDto> getQuestionById(String id) {
-        return null;
+        return questionRepo.findById(id)
+                .map(QuestionAdapter::toQuestionDTO)
+                .doOnError(err -> System.out.println("Error Fetching Data " + err))
+                .doOnSuccess(response -> System.out.println("Question fetched successfully"));
     }
 
     @Override
