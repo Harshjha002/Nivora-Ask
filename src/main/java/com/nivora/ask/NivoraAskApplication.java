@@ -11,7 +11,6 @@ public class NivoraAskApplication {
 	public static void main(String[] args) {
 		System.out.println("running project");
 		Dotenv dotenv = Dotenv.configure()
-				.directory("Nivora-Ask")
 				.load();
 		dotenv.entries().forEach( (DotenvEntry entry) -> System.setProperty(entry.getKey(), entry.getValue()));
 
