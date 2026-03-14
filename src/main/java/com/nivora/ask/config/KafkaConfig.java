@@ -1,8 +1,8 @@
 package com.nivora.ask.config;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -21,6 +21,8 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConfig {
 
+    public static final String TOPIC_NAME = "view-count-topic";
+
     @Value("${spring.kafka.bootstrap-server:localhost:9092}")
     private  String bootstrapServer;
 
@@ -33,7 +35,7 @@ public class KafkaConfig {
 
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG , StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG , JsonSerialize.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG , JsonSerializer.class);
 
 
         return new DefaultKafkaProducerFactory<>(configProps);
@@ -46,7 +48,7 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG , groupId);
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserialize.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
         return  new DefaultKafkaConsumerFactory<>(configProps);
     }

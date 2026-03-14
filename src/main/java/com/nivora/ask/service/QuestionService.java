@@ -4,7 +4,9 @@ package com.nivora.ask.service;
 import com.nivora.ask.adapter.QuestionAdapter;
 import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;
+import com.nivora.ask.events.ViewCountEvent;
 import com.nivora.ask.model.Question;
+import com.nivora.ask.producers.KafkaEventProducer;
 import com.nivora.ask.repo.QuestionRepo;
 import com.nivora.ask.utils.CursorUtils;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ import java.time.LocalDateTime;
 public class QuestionService implements  IQuestionService {
 
     private final QuestionRepo questionRepo;
+
+    private  final KafkaEventProducer kafkaEventProducer;
 
 
     //Create Question
@@ -73,7 +77,11 @@ public class QuestionService implements  IQuestionService {
         return questionRepo.findById(id)
                 .map(QuestionAdapter::toQuestionDTO)
                 .doOnError(err -> System.out.println("Error Fetching Data " + err))
-                .doOnSuccess(response -> System.out.println("Question fetched successfully"));
+                .doOnSuccess(response -> {
+                    System.out.println("Question fetched successfully");
+                    ViewCountEvent viewCountEvent = new ViewCountEvent(id,"Question",LocalDateTime.now());
+                    kafkaEventProducer.publishViewCountEvent(viewCountEvent);
+                });
     }
 
     @Override
