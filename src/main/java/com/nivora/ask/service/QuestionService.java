@@ -70,7 +70,6 @@ public class QuestionService implements  IQuestionService {
         }
     }
 
-
     //View Count
     @Override
     public Mono<QuestionResponseDto> getQuestionById(String id) {
@@ -82,11 +81,6 @@ public class QuestionService implements  IQuestionService {
                     ViewCountEvent viewCountEvent = new ViewCountEvent(id,"Question",LocalDateTime.now());
                     kafkaEventProducer.publishViewCountEvent(viewCountEvent);
                 });
-    }
-
-    @Override
-    public Mono<Void> deleteQuestionById(String id) {
-        return null;
     }
 
     @Override
@@ -102,6 +96,11 @@ public class QuestionService implements  IQuestionService {
 
     @Override
     public Flux<QuestionResponseDto> getQuestionsByTag(String tag, int page, int size) {
+        return null;
+    }
+
+    @Override
+    public Mono<Void> deleteQuestionById(String id) {
         return null;
     }
 }

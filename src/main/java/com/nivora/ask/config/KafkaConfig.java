@@ -23,10 +23,10 @@ public class KafkaConfig {
 
     public static final String TOPIC_NAME = "view-count-topic";
 
-    @Value("${spring.kafka.bootstrap-server:localhost:9092}")
+    @Value("${spring.kafka.bootstrap-servers:localhost:9092}")
     private  String bootstrapServer;
 
-    @Value("${spring.kafka.consumer.group-id:vire-count-consumer}")
+    @Value("${spring.kafka.consumer.group-id:view-count-consumer}")
     private  String groupId;
 
     @Bean
@@ -49,6 +49,7 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG , groupId);
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        configProps.put(JsonDeserializer.TRUSTED_PACKAGES,"com.nivora.ask.events");
 
         return  new DefaultKafkaConsumerFactory<>(configProps);
     }

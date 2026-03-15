@@ -20,7 +20,7 @@ public class KafkaEventProducer {
                 String.valueOf(viewCountEvent.getTargetId()),
                 viewCountEvent
         ).whenComplete((result,error) -> {
-            if(error!= null){
+            if (error != null){
                 System.out.println("Error Publishing view count Event: " + error.getMessage());
             }
         });
