@@ -1,6 +1,5 @@
 package com.nivora.ask.dto;
 
-
 import com.nivora.ask.model.LikeTargetTypeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,11 +15,14 @@ import java.time.LocalDateTime;
 public class LikeResponseDto {
 
     private String id;
+
     private String targetId;
+
     private LikeTargetTypeEnum targetType;
 
     private Boolean isLike;
 
-    private LocalDateTime createdAt;
+    private Long count;
 
+    private LocalDateTime createdAt;
 }

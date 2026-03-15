@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface ILikeService {
 
-    Mono<LikeRequestDto> createLike(LikeRequestDto likeRequestDto);
+    Mono<LikeResponseDto> createLike(LikeRequestDto likeRequestDto);
 
     Mono<LikeResponseDto> countLikesByTargetIdAndTargetType(String targetId , LikeTargetTypeEnum targetType);
 

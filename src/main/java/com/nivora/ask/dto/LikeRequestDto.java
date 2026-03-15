@@ -1,7 +1,7 @@
 package com.nivora.ask.dto;
 
 import com.nivora.ask.model.LikeTargetTypeEnum;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,12 +13,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LikeRequestDto {
 
-    @NotBlank(message = "Target ID is required")
-    private  String targetId;
+    @NotNull(message = "Target ID is required")
+    private String targetId;
 
-    @NotBlank(message = "Target Type is required")
+    @NotNull(message = "Target type is required")
     private LikeTargetTypeEnum targetType;
 
-    @NotBlank(message = "Is Like is required")
+    @NotNull(message = "Like value is required")
     private Boolean isLike;
 }
