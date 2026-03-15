@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AnswerResponseDto {
 
-    private  String id;
-    private  String title;
-    private  String content;
+    private String id;
+    private String content;
     private LocalDateTime createdAt;
+
 }
