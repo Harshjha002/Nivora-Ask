@@ -6,7 +6,9 @@ import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;
 import com.nivora.ask.events.ViewCountEvent;
 import com.nivora.ask.model.Question;
+import com.nivora.ask.model.QuestionElasticDocument;
 import com.nivora.ask.producers.KafkaEventProducer;
+import com.nivora.ask.repo.QuestionDocumentElasticRepo;
 import com.nivora.ask.repo.QuestionRepo;
 import com.nivora.ask.utils.CursorUtils;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,11 @@ public class QuestionService implements  IQuestionService {
     private final QuestionRepo questionRepo;
 
     private  final KafkaEventProducer kafkaEventProducer;
+
+    private  final IQuestionIndexService questionIndexService;
+
+    private final QuestionDocumentElasticRepo questionDocumentElasticRepo;
+
 
 
     //Create Question
@@ -39,7 +47,11 @@ public class QuestionService implements  IQuestionService {
                 .build();
 
         return questionRepo.save(question)
-                .map(QuestionAdapter::toQuestionDTO)
+                .map(savedQuestion -> {
+
+                    questionIndexService.createQuestionIndex(savedQuestion);
+                    return QuestionAdapter.toQuestionDTO(savedQuestion);
+                })
                 .doOnSuccess(response -> System.out.println("Question created successfully: " + response))
                 .doOnError(error -> System.out.println("Error creating question: "+ error));
 
@@ -102,5 +114,15 @@ public class QuestionService implements  IQuestionService {
     @Override
     public Mono<Void> deleteQuestionById(String id) {
         return null;
+    }
+
+
+    @Override
+    public List<QuestionElasticDocument> searchQuestionByElasticsearch(String query) {
+
+        System.out.println("Query: " + query);
+
+        return questionDocumentElasticRepo
+                .findByTitleContainingOrContentContaining(query, query);
     }
 }

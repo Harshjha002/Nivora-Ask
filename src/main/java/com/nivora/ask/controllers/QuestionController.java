@@ -2,11 +2,14 @@ package com.nivora.ask.controllers;
 
 import com.nivora.ask.dto.QuestionRequestDto;
 import com.nivora.ask.dto.QuestionResponseDto;
+import com.nivora.ask.model.QuestionElasticDocument;
 import com.nivora.ask.service.IQuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -69,5 +72,12 @@ public class QuestionController {
             @RequestParam(defaultValue = "10") int size) {
 
         return questionService.getQuestionsByTag(tag, page, size);
+    }
+
+    @GetMapping("/elasticsearch")
+    public List<QuestionElasticDocument> searchByElasticsearch(
+            @RequestParam String query) {
+
+        return questionService.searchQuestionByElasticsearch(query);
     }
 }

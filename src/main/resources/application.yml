@@ -8,3 +8,8 @@ spring:
       port: ${MONGO_PORT}
       database: ${MONGO_DB}
       auto-index-creation: ${MONGO_AUTO_INDEX}
+
+  elasticsearch:
+      uris: ${ELASTIC_URI}
+#      username: ${ELASTIC_USERNAME}
+#      password: ${ELASTIC_PASSWORD}
