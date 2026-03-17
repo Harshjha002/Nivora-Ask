@@ -1,7 +1,6 @@
 package com.nivora.ask.repo;
 
 
-import com.nivora.ask.dto.QuestionResponseDto;
 import com.nivora.ask.model.Question;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;

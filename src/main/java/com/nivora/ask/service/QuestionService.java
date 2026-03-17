@@ -19,7 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -118,11 +118,10 @@ public class QuestionService implements  IQuestionService {
 
 
     @Override
-    public List<QuestionElasticDocument> searchQuestionByElasticsearch(String query) {
+    public Flux<QuestionElasticDocument> searchQuestionByElasticsearch(String query) {
 
         System.out.println("Query: " + query);
 
-        return questionDocumentElasticRepo
-                .findByTitleContainingOrContentContaining(query, query);
+        return questionDocumentElasticRepo.findByTitleContainingOrContentContaining(query, query);
     }
 }

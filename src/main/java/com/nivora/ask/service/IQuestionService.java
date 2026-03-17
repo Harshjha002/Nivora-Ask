@@ -6,8 +6,6 @@ import com.nivora.ask.model.QuestionElasticDocument;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 public interface IQuestionService {
 
     // Create question
@@ -28,6 +26,8 @@ public interface IQuestionService {
     // Get questions by tag with pagination
     Flux<QuestionResponseDto> getQuestionsByTag(String tag, int page, int size);
 
-    List<QuestionElasticDocument> searchQuestionByElasticsearch(String query);
+
+    //Elastic search
+    Flux<QuestionElasticDocument> searchQuestionByElasticsearch(String query);
 
 }

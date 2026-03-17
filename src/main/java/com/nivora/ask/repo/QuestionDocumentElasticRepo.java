@@ -1,13 +1,15 @@
 package com.nivora.ask.repo;
 
 import com.nivora.ask.model.QuestionElasticDocument;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository;
 
-import java.util.List;
+import reactor.core.publisher.Flux;
+
+
 
 public interface QuestionDocumentElasticRepo
-        extends ElasticsearchRepository<QuestionElasticDocument, String> {
+        extends ReactiveElasticsearchRepository<QuestionElasticDocument, String> {
 
-    List<QuestionElasticDocument>
+    Flux<QuestionElasticDocument>
     findByTitleContainingOrContentContaining(String title, String content);
 }
